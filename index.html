@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İkra Güler — İç Mimarlık / Interior Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    /* Harmonious palette: warm cream base · deep olive · soft terracotta · dusty blush */
+    --bg:      #f7f4ef;
+    --white:   #fdfcfa;
+    --light:   #ede8df;
+    --border:  #ddd6c8;
+    --muted:   #8a8278;
+    --text:    #2b2720;
+    --dark:    #1e1b16;
+    --olive:   #5a6145;   /* primary accent */
+    --olive-l: #7d8a62;   /* lighter olive */
+    --terra:   #b87355;   /* terracotta warm */
+    --blush:   #c8a898;   /* dusty blush */
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans:  'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ═══ NAV ═══ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(247,244,239,0.93);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 64px;
+    height: 68px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.2rem; font-weight: 400;
+    color: var(--text); text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+  .nav-logo span { color: var(--olive); font-style: italic; }
+  .nav-right { display: flex; align-items: center; gap: 36px; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 0.7rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--muted);
+    text-decoration: none; font-weight: 400;
+    transition: color .25s;
+  }
+  .nav-links a:hover { color: var(--olive); }
+
+  .lang-toggle { display: flex; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+  .lang-btn {
+    padding: 5px 12px;
+    font-size: 0.63rem; letter-spacing: 0.12em; text-transform: uppercase;
+    font-family: var(--sans); font-weight: 400;
+    background: transparent; border: none; cursor: pointer;
+    color: var(--muted); transition: all .2s;
+  }
+  .lang-btn.active { background: var(--olive); color: var(--white); }
+
+  /* ═══ HERO ═══ */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 55% 45%;
+    padding-top: 68px;
+  }
+  .hero-content {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 64px;
+    position: relative;
+  }
+  .hero-tag {
+    font-size: 0.63rem; letter-spacing: 0.24em;
+    text-transform: uppercase; color: var(--olive);
+    margin-bottom: 28px;
+    opacity: 0; animation: up .7s ease forwards .2s;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 4.8vw, 5.2rem);
+    font-weight: 400; line-height: 1.08; color: var(--text);
+    opacity: 0; animation: up .8s ease forwards .35s;
+  }
+  .hero-title em { font-style: italic; color: var(--terra); display: block; }
+  .hero-desc {
+    margin-top: 28px; font-size: 0.9rem;
+    color: var(--muted); max-width: 380px;
+    line-height: 1.85; font-weight: 300;
+    opacity: 0; animation: up .8s ease forwards .5s;
+  }
+  .hero-actions {
+    margin-top: 48px; display: flex; align-items: center; gap: 28px;
+    opacity: 0; animation: up .8s ease forwards .65s;
+  }
+  .btn {
+    display: inline-block; padding: 13px 32px;
+    font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
+    text-decoration: none; font-family: var(--sans); font-weight: 400;
+    transition: all .25s; cursor: pointer; border: none;
+  }
+  .btn-primary { background: var(--olive); color: var(--white); }
+  .btn-primary:hover { background: var(--text); }
+  .btn-outline {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--muted); font-size: 0.68rem; letter-spacing: 0.14em;
+    text-transform: uppercase; text-decoration: none;
+    padding: 12px 28px; transition: all .25s; font-family: var(--sans);
+  }
+  .btn-outline:hover { border-color: var(--olive); color: var(--olive); }
+  .btn-ghost {
+    background: transparent; color: var(--muted);
+    font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; display: flex; align-items: center; gap: 8px;
+    transition: gap .25s, color .25s; font-family: var(--sans);
+  }
+  .btn-ghost:hover { gap: 14px; color: var(--olive); }
+
+  /* scroll hint */
+  .scroll-hint {
+    position: absolute; bottom: 48px; left: 64px;
+    display: flex; align-items: flex-end; gap: 12px;
+    opacity: 0; animation: up .8s ease forwards 1s;
+  }
+  .scroll-line {
+    width: 1px; height: 48px; background: var(--olive);
+    transform-origin: top; transform: scaleY(0);
+    animation: lineGrow 1s ease forwards 1.2s;
+  }
+  .scroll-text {
+    font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); writing-mode: vertical-rl; transform: rotate(180deg);
+  }
+
+  .hero-visual {
+    position: relative; overflow: hidden;
+    opacity: 0; animation: fadeIn 1s ease forwards .15s;
+  }
+  .hero-visual-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(150deg, #ddd5c4 0%, #c8b898 30%, #a89070 60%, #7a6050 100%);
+  }
+  .hero-visual-pattern {
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.03) 40px, rgba(255,255,255,0.03) 41px),
+      repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(255,255,255,0.03) 40px, rgba(255,255,255,0.03) 41px);
+  }
+  .hero-room {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-room svg { width: 60%; opacity: 0.12; }
+  .hero-badge {
+    position: absolute; bottom: 36px; right: 36px;
+    width: 90px; height: 90px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; gap: 2px;
+  }
+  .hero-badge-num {
+    font-family: var(--serif); font-size: 1.6rem;
+    color: rgba(255,255,255,0.8); line-height: 1;
+  }
+  .hero-badge-text {
+    font-size: 0.5rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: rgba(255,255,255,0.45);
+  }
+
+  /* ═══ SECTION BASE ═══ */
+  section { padding: 100px 64px; }
+  .section-tag {
+    font-size: 0.62rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--olive); margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.9rem, 3vw, 3rem);
+    font-weight: 400; line-height: 1.2; color: var(--text); margin-bottom: 20px;
+  }
+  .section-title em { font-style: italic; color: var(--terra); }
+  .divider { width: 44px; height: 1px; background: var(--olive); margin-bottom: 40px; }
+
+  /* ═══ ABOUT ═══ */
+  #about {
+    background: var(--white);
+    display: grid; grid-template-columns: 42% 1fr;
+    gap: 80px; align-items: start;
+  }
+  .about-photo {
+    position: sticky; top: 88px;
+    aspect-ratio: 3/4; background: var(--light); overflow: hidden;
+  }
+  .about-photo-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(150deg, #d8cfc0 0%, #b8a888 40%, #907860 70%, #5a4830 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .about-photo-bg svg { width: 38%; opacity: 0.13; }
+  .about-photo-label {
+    position: absolute; bottom: 22px; left: 22px;
+    font-size: 0.58rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: rgba(255,255,255,0.45);
+  }
+  /* Olive side stripe */
+  .about-photo::after {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0; width: 4px;
+    background: var(--olive);
+  }
+
+  .about-text { padding-top: 8px; }
+  .about-text p {
+    color: var(--muted); line-height: 1.9;
+    font-size: 0.92rem; margin-bottom: 18px;
+  }
+  .about-text p strong { color: var(--text); font-weight: 500; }
+
+  .about-education {
+    margin-top: 36px; padding: 28px 28px;
+    background: var(--bg);
+    border-left: 3px solid var(--olive);
+  }
+  .edu-title {
+    font-size: 0.6rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--olive);
+    margin-bottom: 16px;
+  }
+  .edu-item { margin-bottom: 14px; }
+  .edu-item:last-child { margin-bottom: 0; }
+  .edu-degree {
+    font-family: var(--serif); font-size: 0.98rem;
+    color: var(--text); margin-bottom: 3px;
+  }
+  .edu-school {
+    font-size: 0.78rem; color: var(--muted); font-weight: 300;
+  }
+  .edu-year {
+    font-size: 0.65rem; color: var(--blush);
+    letter-spacing: 0.1em; margin-top: 2px;
+  }
+
+  .about-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; margin-top: 40px;
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+  }
+  .about-stat {
+    padding: 24px 20px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .about-stat-num {
+    font-family: var(--serif); font-size: 2.2rem;
+    font-weight: 400; color: var(--olive); line-height: 1;
+  }
+  .about-stat-label {
+    font-size: 0.6rem; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--muted); margin-top: 6px;
+  }
+
+  /* ═══ PORTFOLIO ═══ */
+  #portfolio { background: var(--bg); }
+  .portfolio-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-end; margin-bottom: 48px;
+  }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 280px 280px;
+    gap: 3px;
+  }
+  .project-card {
+    position: relative; overflow: hidden; cursor: pointer;
+  }
+  .project-card:nth-child(1) { grid-column: span 5; grid-row: span 2; }
+  .project-card:nth-child(2) { grid-column: span 4; }
+  .project-card:nth-child(3) { grid-column: span 3; }
+  .project-card:nth-child(4) { grid-column: span 3; }
+  .project-card:nth-child(5) { grid-column: span 4; }
+
+  .project-bg {
+    position: absolute; inset: 0;
+    transition: transform .6s cubic-bezier(.25,.46,.45,.94);
+  }
+  .project-card:hover .project-bg { transform: scale(1.07); }
+  .project-bg-1 { background: linear-gradient(145deg, #c8b898 0%, #907050 60%, #5a3820 100%); }
+  .project-bg-2 { background: linear-gradient(145deg, #b8c0a8 0%, #7a8a68 60%, #4a5838 100%); }
+  .project-bg-3 { background: linear-gradient(145deg, #c8b8b0 0%, #a07868 60%, #685040 100%); }
+  .project-bg-4 { background: linear-gradient(145deg, #b0b8c0 0%, #6878 88 60%, #404858 100%); }
+  .project-bg-5 { background: linear-gradient(145deg, #c0b8a0 0%, #888060 60%, #504830 100%); }
+  .project-bg-4 { background: linear-gradient(145deg, #b4bcc4 0%, #728090 60%, #384050 100%); }
+
+  .project-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(15,12,8,0.82) 0%, rgba(15,12,8,0.1) 55%, transparent 100%);
+    opacity: 0; transition: opacity .4s;
+  }
+  .project-card:hover .project-overlay { opacity: 1; }
+  .project-info {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 24px 22px;
+    transform: translateY(6px); transition: transform .4s;
+  }
+  .project-card:hover .project-info { transform: translateY(0); }
+  .project-cat {
+    font-size: 0.56rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255,255,255,0.5);
+    margin-bottom: 5px;
+  }
+  .project-name {
+    font-family: var(--serif); font-size: 1.05rem;
+    font-weight: 400; color: #fff; line-height: 1.3;
+  }
+
+  /* ═══ SERVICES ═══ */
+  #services { background: var(--dark); }
+  #services .section-tag  { color: var(--olive-l); }
+  #services .section-title { color: var(--white); }
+  #services .section-title em { color: var(--terra); }
+  #services .divider { background: var(--olive); }
+
+  .services-intro {
+    font-size: 0.9rem; color: rgba(255,255,255,0.38);
+    max-width: 560px; line-height: 1.85;
+    font-weight: 300; margin-bottom: 60px;
+    margin-top: -20px;
+  }
+
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+  .service-item {
+    padding: 44px 36px 52px;
+    background: var(--dark);
+    transition: background .3s;
+    position: relative;
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .service-item:hover { background: #28231b; }
+  .service-num {
+    font-family: var(--serif); font-size: 0.72rem;
+    color: var(--olive-l); margin-bottom: 20px;
+    font-style: italic;
+  }
+  .service-icon {
+    font-size: 1.4rem; margin-bottom: 16px; opacity: 0.55;
+  }
+  .service-name {
+    font-family: var(--serif); font-size: 1.3rem;
+    font-weight: 400; color: var(--white);
+    margin-bottom: 14px; line-height: 1.25;
+  }
+  .service-desc {
+    font-size: 0.82rem; color: rgba(255,255,255,0.36);
+    line-height: 1.85; font-weight: 300; flex: 1;
+  }
+  .service-tags {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 22px;
+  }
+  .service-tag {
+    font-size: 0.58rem; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 4px 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.28); border-radius: 1px;
+  }
+  .service-arrow {
+    position: absolute; bottom: 36px; right: 32px;
+    color: rgba(255,255,255,0.12); font-size: 1rem;
+    transition: all .3s;
+  }
+  .service-item:hover .service-arrow { color: var(--terra); transform: translateX(4px); }
+
+  /* Process strip */
+  .process-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.04);
+    margin-top: 60px;
+  }
+  .process-step {
+    padding: 32px 28px;
+    background: #191510;
+    position: relative;
+  }
+  .process-step-num {
+    font-family: var(--serif); font-size: 2.4rem;
+    color: rgba(255,255,255,0.04); position: absolute;
+    top: 16px; right: 20px; line-height: 1; font-weight: 400;
+  }
+  .process-step-label {
+    font-size: 0.58rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--olive-l);
+    margin-bottom: 10px;
+  }
+  .process-step-title {
+    font-family: var(--serif); font-size: 1rem;
+    color: rgba(255,255,255,0.7); font-weight: 400;
+  }
+
+  /* ═══ TESTIMONIALS ═══ */
+  #testimonials {
+    background: var(--light); padding: 80px 64px;
+  }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 28px; margin-top: 48px;
+  }
+  .testimonial-card {
+    background: var(--white); padding: 36px 32px;
+    border-bottom: 3px solid var(--olive);
+  }
+  .testimonial-quote {
+    font-family: var(--serif); font-size: 2.5rem;
+    color: var(--olive); line-height: 1; margin-bottom: 16px;
+    opacity: 0.4;
+  }
+  .testimonial-text {
+    font-size: 0.88rem; color: var(--muted);
+    line-height: 1.85; font-weight: 300; margin-bottom: 24px;
+    font-style: italic;
+  }
+  .testimonial-author { display: flex; align-items: center; gap: 14px; }
+  .testimonial-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--olive-l), var(--olive));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 1rem; color: white; font-style: italic;
+  }
+  .testimonial-name {
+    font-size: 0.8rem; font-weight: 500; color: var(--text);
+    line-height: 1.3;
+  }
+  .testimonial-role {
+    font-size: 0.68rem; color: var(--muted); letter-spacing: 0.05em;
+  }
+
+  /* ═══ CONTACT ═══ */
+  #contact {
+    background: var(--white);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start;
+  }
+  .contact-info p {
+    font-size: 0.9rem; color: var(--muted);
+    line-height: 1.9; margin-bottom: 40px; max-width: 400px;
+    font-weight: 300;
+  }
+  .contact-details { margin-top: 8px; }
+  .contact-row {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 16px 0; border-bottom: 1px solid var(--border);
+  }
+  .contact-row:first-child { border-top: 1px solid var(--border); }
+  .contact-label {
+    font-size: 0.58rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted); width: 76px; flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .contact-value {
+    font-size: 0.85rem; color: var(--text);
+    text-decoration: none; transition: color .2s; line-height: 1.6;
+  }
+  .contact-value:hover { color: var(--olive); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 18px; }
+  .form-group { display: flex; flex-direction: column; gap: 7px; }
+  .form-label {
+    font-size: 0.6rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .form-input, .form-textarea, .form-select {
+    font-family: var(--sans); font-size: 0.88rem;
+    font-weight: 300; padding: 13px 15px;
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); outline: none;
+    transition: border-color .25s; border-radius: 0; resize: none;
+    appearance: none;
+  }
+  .form-input:focus, .form-textarea:focus, .form-select:focus {
+    border-color: var(--olive);
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-textarea { min-height: 130px; }
+
+  /* ═══ FOOTER ═══ */
+  footer {
+    background: var(--dark); padding: 44px 64px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .footer-logo {
+    font-family: var(--serif); font-size: 1.05rem;
+    color: rgba(255,255,255,0.45); font-style: italic;
+  }
+  .footer-copy {
+    font-size: 0.6rem; letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.2); text-transform: uppercase;
+  }
+  .footer-socials { display: flex; gap: 22px; }
+  .footer-socials a {
+    font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3); text-decoration: none; transition: color .2s;
+  }
+  .footer-socials a:hover { color: var(--olive-l); }
+
+  /* ═══ ANIMATIONS ═══ */
+  @keyframes up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes lineGrow { to { transform: scaleY(1); } }
+
+  /* ═══ RESPONSIVE ═══ */
+  @media (max-width: 960px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    section { padding: 70px 24px; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { height: 55vw; min-height: 280px; }
+    .hero-content { padding: 60px 24px; }
+    .scroll-hint { display: none; }
+    #about { grid-template-columns: 1fr; gap: 40px; }
+    .about-photo { position: static; aspect-ratio: 4/3; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .project-card:nth-child(n) { grid-column: span 1; grid-row: span 1; aspect-ratio: 4/3; }
+    .services-grid { grid-template-columns: 1fr; }
+    .process-strip { grid-template-columns: 1fr 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    #contact { grid-template-columns: 1fr; gap: 50px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+    .portfolio-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a class="nav-logo" href="#">İkra <span>Güler</span></a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about"        data-tr="Hakkımda"  data-en="About">Hakkımda</a></li>
+      <li><a href="#portfolio"    data-tr="Projeler"  data-en="Projects">Projeler</a></li>
+      <li><a href="#services"     data-tr="Hizmetler" data-en="Services">Hizmetler</a></li>
+      <li><a href="#contact"      data-tr="İletişim"  data-en="Contact">İletişim</a></li>
+    </ul>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('tr')">TR</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-tag" data-tr="İç Mimar · İzmir" data-en="Interior Designer · İzmir">İç Mimar · İzmir</div>
+    <h1 class="hero-title"
+        data-tr="Mekânlar<br><em>dönüşür.</em>"
+        data-en="Spaces<br><em>transform.</em>">
+      Mekânlar<br><em>dönüşür.</em>
+    </h1>
+    <p class="hero-desc"
+       data-tr="Yaşadığınız ve çalıştığınız alanları işlevsellik, estetik ve kimlikle buluşturan tasarımlar üretiyorum. Her mekân, orada yaşanacak hayatı hak ediyor."
+       data-en="I create designs that unite functionality, aesthetics, and identity in the spaces you live and work in. Every space deserves the life that will be lived in it.">
+      Yaşadığınız ve çalıştığınız alanları işlevsellik, estetik ve kimlikle buluşturan tasarımlar üretiyorum. Her mekân, orada yaşanacak hayatı hak ediyor.
+    </p>
+    <div class="hero-actions">
+      <a href="#portfolio" class="btn btn-primary" data-tr="Projeleri İncele" data-en="View Projects">Projeleri İncele</a>
+      <a href="#contact"   class="btn-outline"     data-tr="İletişime Geç"   data-en="Get in Touch">İletişime Geç</a>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span class="scroll-text" data-tr="Keşfet" data-en="Explore">Keşfet</span>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-visual-bg"></div>
+    <div class="hero-visual-pattern"></div>
+    <div class="hero-room">
+      <svg viewBox="0 0 240 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Floor perspective -->
+        <path d="M20 160 L120 200 L220 160 L220 40 L120 0 L20 40 Z" stroke="white" stroke-width="1" fill="none"/>
+        <!-- Wall lines -->
+        <line x1="20" y1="40" x2="120" y2="80" stroke="white" stroke-width="0.7"/>
+        <line x1="220" y1="40" x2="120" y2="80" stroke="white" stroke-width="0.7"/>
+        <line x1="120" y1="80" x2="120" y2="200" stroke="white" stroke-width="0.7"/>
+        <!-- Sofa -->
+        <rect x="60" y="130" width="80" height="28" stroke="white" stroke-width="1.2" fill="none"/>
+        <rect x="60" y="120" width="80" height="12" stroke="white" stroke-width="1" fill="none"/>
+        <!-- Table -->
+        <ellipse cx="120" cy="108" rx="22" ry="10" stroke="white" stroke-width="1"/>
+        <!-- Lamp -->
+        <line x1="180" y1="50" x2="180" y2="130" stroke="white" stroke-width="1"/>
+        <ellipse cx="180" cy="46" rx="14" ry="6" stroke="white" stroke-width="1"/>
+        <!-- Window -->
+        <rect x="40" y="50" width="50" height="60" stroke="white" stroke-width="1"/>
+        <line x1="65" y1="50" x2="65" y2="110" stroke="white" stroke-width="0.5"/>
+        <line x1="40" y1="80" x2="90" y2="80" stroke="white" stroke-width="0.5"/>
+        <!-- Rug -->
+        <ellipse cx="110" cy="155" rx="40" ry="15" stroke="white" stroke-width="0.8" stroke-dasharray="3 3"/>
+      </svg>
+    </div>
+    <div class="hero-badge">
+      <span class="hero-badge-num">10+</span>
+      <span class="hero-badge-text" data-tr="Yıl Deneyim" data-en="Years Exp.">Yıl Deneyim</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+  <div class="about-photo">
+    <div class="about-photo-bg">
+      <svg viewBox="0 0 100 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="38" r="24" stroke="white" stroke-width="1.5"/>
+        <path d="M8 130 Q12 85 50 78 Q88 85 92 130" stroke="white" stroke-width="1.5" fill="none"/>
+        <line x1="34" y1="32" x2="44" y2="32" stroke="white" stroke-width="1.2"/>
+        <line x1="56" y1="32" x2="66" y2="32" stroke="white" stroke-width="1.2"/>
+        <path d="M40 46 Q50 54 60 46" stroke="white" stroke-width="1.2" fill="none"/>
+      </svg>
+    </div>
+    <span class="about-photo-label" data-tr="İkra Güler — İç Mimar" data-en="İkra Güler — Interior Designer">İkra Güler — İç Mimar</span>
+  </div>
+
+  <div class="about-text">
+    <div class="section-tag" data-tr="Hakkımda" data-en="About Me">Hakkımda</div>
+    <h2 class="section-title"
+        data-tr="Tasarım benim için<br>bir <em>dil</em>dir."
+        data-en="For me, design<br>is a <em>language</em>.">
+      Tasarım benim için<br>bir <em>dil</em>dir.
+    </h2>
+    <div class="divider"></div>
+
+    <p data-tr="İzmir Ekonomi Üniversitesi İç Mimarlık ve Çevre Tasarımı bölümünden <strong>lisans</strong> derecesiyle mezun olduktan sonra, aynı üniversitede <strong>yüksek lisans</strong> eğitimimi tamamladım. Akademik altyapım bana mekânı yalnızca estetik değil, davranışsal ve psikolojik bir boyutla okuma yeteneği kazandırdı."
+       data-en="After graduating with a <strong>bachelor's degree</strong> from İzmir University of Economics, Department of Interior Architecture and Environmental Design, I completed my <strong>master's degree</strong> at the same university. My academic background gave me the ability to read space not just aesthetically, but through a behavioral and psychological lens.">
+      İzmir Ekonomi Üniversitesi İç Mimarlık ve Çevre Tasarımı bölümünden <strong>lisans</strong> derecesiyle mezun olduktan sonra, aynı üniversitede <strong>yüksek lisans</strong> eğitimimi tamamladım. Akademik altyapım bana mekânı yalnızca estetik değil, davranışsal ve psikolojik bir boyutla okuma yeteneği kazandırdı.
+    </p>
+    <p data-tr="10 yılı aşkın profesyonel deneyimim boyunca lüks konutlardan butik otellere, kurumsal ofislerden restoranlara kadar 90'dan fazla projeyi hayata geçirdim. Her projede müşterimin yaşam biçimini, değerlerini ve beklentilerini dinleyerek işe başlarım; tasarım kararlarımı sezgiyle değil, <strong>araştırma ve diyalogla</strong> şekillendiririm."
+       data-en="Over 10+ years of professional experience, I've completed over 90 projects ranging from luxury residences to boutique hotels, corporate offices to restaurants. In every project, I begin by listening to my client's lifestyle, values, and expectations — I shape my design decisions through <strong>research and dialogue</strong>, not intuition alone.">
+      10 yılı aşkın profesyonel deneyimim boyunca lüks konutlardan butik otellere, kurumsal ofislerden restoranlara kadar 90'dan fazla projeyi hayata geçirdim. Her projede müşterimin yaşam biçimini, değerlerini ve beklentilerini dinleyerek işe başlarım; tasarım kararlarımı sezgiyle değil, <strong>araştırma ve diyalogla</strong> şekillendiririm.
+    </p>
+    <p data-tr="Tasarımlarımda doğal dokuların, el işçiliğinin ve sürdürülebilir malzemelerin sıcaklığına özel önem veriyorum. Bana göre güzel bir mekân; hem göze, hem bedene, hem de zamana hizmet etmelidir."
+       data-en="In my designs, I give special importance to the warmth of natural textures, craftsmanship, and sustainable materials. In my view, a beautiful space should serve the eye, the body, and time itself.">
+      Tasarımlarımda doğal dokuların, el işçiliğinin ve sürdürülebilir malzemelerin sıcaklığına özel önem veriyorum. Bana göre güzel bir mekân; hem göze, hem bedene, hem de zamana hizmet etmelidir.
+    </p>
+
+    <div class="about-education">
+      <div class="edu-title" data-tr="Eğitim" data-en="Education">Eğitim</div>
+      <div class="edu-item">
+        <div class="edu-degree" data-tr="Yüksek Lisans — İç Mimarlık ve Çevre Tasarımı" data-en="M.Sc. — Interior Architecture & Environmental Design">Yüksek Lisans — İç Mimarlık ve Çevre Tasarımı</div>
+        <div class="edu-school">İzmir Ekonomi Üniversitesi</div>
+        <div class="edu-year">2016</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-degree" data-tr="Lisans — İç Mimarlık ve Çevre Tasarımı" data-en="B.Sc. — Interior Architecture & Environmental Design">Lisans — İç Mimarlık ve Çevre Tasarımı</div>
+        <div class="edu-school">İzmir Ekonomi Üniversitesi</div>
+        <div class="edu-year">2014</div>
+      </div>
+    </div>
+
+    <div class="about-stats">
+      <div class="about-stat">
+        <div class="about-stat-num">10+</div>
+        <div class="about-stat-label" data-tr="Yıl Deneyim" data-en="Years Exp.">Yıl Deneyim</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-num">90+</div>
+        <div class="about-stat-label" data-tr="Tamamlanan Proje" data-en="Projects Done">Tamamlanan Proje</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-num">7</div>
+        <div class="about-stat-label" data-tr="Tasarım Ödülü" data-en="Design Awards">Tasarım Ödülü</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-num">3</div>
+        <div class="about-stat-label" data-tr="Uluslararası Proje" data-en="International">Uluslararası Proje</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PORTFOLIO ═══ -->
+<section id="portfolio">
+  <div class="portfolio-header">
+    <div>
+      <div class="section-tag" data-tr="Projeler" data-en="Projects">Projeler</div>
+      <h2 class="section-title" data-tr="Seçili <em>çalışmalar</em>" data-en="Selected <em>works</em>">Seçili <em>çalışmalar</em></h2>
+    </div>
+    <a href="#contact" class="btn-ghost" data-tr="Tüm projeleri gör →" data-en="View all projects →">Tüm projeleri gör →</a>
+  </div>
+  <div class="portfolio-grid">
+    <div class="project-card">
+      <div class="project-bg project-bg-1"></div>
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-cat" data-tr="Konut · Alsancak, İzmir" data-en="Residential · Alsancak, İzmir">Konut · Alsancak, İzmir</div>
+        <div class="project-name" data-tr="Ege Manzaralı Penthouse" data-en="Aegean View Penthouse">Ege Manzaralı Penthouse</div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-bg project-bg-2"></div>
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-cat" data-tr="Butik Otel · Alaçatı" data-en="Boutique Hotel · Alaçatı">Butik Otel · Alaçatı</div>
+        <div class="project-name" data-tr="Taş & Zeytinlik Retreat" data-en="Stone & Olive Retreat">Taş & Zeytinlik Retreat</div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-bg project-bg-3"></div>
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-cat" data-tr="Ofis · İzmir" data-en="Office · İzmir">Ofis · İzmir</div>
+        <div class="project-name" data-tr="Hukuk Bürosu" data-en="Law Firm Office">Hukuk Bürosu</div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-bg project-bg-4"></div>
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-cat" data-tr="Villa · Çeşme" data-en="Villa · Çeşme">Villa · Çeşme</div>
+        <div class="project-name" data-tr="Akdeniz Villa" data-en="Mediterranean Villa">Akdeniz Villa</div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-bg project-bg-5"></div>
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-cat" data-tr="Restoran · Kordon" data-en="Restaurant · Kordon">Restoran · Kordon</div>
+        <div class="project-name" data-tr="Deniz Kenarı Bistro" data-en="Waterfront Bistro">Deniz Kenarı Bistro</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+<section id="services">
+  <div class="section-tag" data-tr="Hizmetler" data-en="Services">Hizmetler</div>
+  <h2 class="section-title"
+      data-tr="Size özel <em>çözümler</em>"
+      data-en="Tailored <em>solutions</em>">
+    Size özel <em>çözümler</em>
+  </h2>
+  <div class="divider"></div>
+  <p class="services-intro"
+     data-tr="Her proje kendi içinde benzersizdir. Sunduğum hizmetler, ihtiyacınıza göre tek tek ya da birlikte paketlenebilir. Ücretsiz keşif görüşmesiyle başlıyoruz."
+     data-en="Every project is unique in its own right. The services I offer can be packaged individually or together according to your needs. We start with a free discovery call.">
+    Her proje kendi içinde benzersizdir. Sunduğum hizmetler, ihtiyacınıza göre tek tek ya da birlikte paketlenebilir. Ücretsiz keşif görüşmesiyle başlıyoruz.
+  </p>
+
+  <div class="services-grid">
+
+    <div class="service-item">
+      <div class="service-num">01</div>
+      <div class="service-icon">🏠</div>
+      <div class="service-name" data-tr="Konut Tasarımı" data-en="Residential Design">Konut Tasarımı</div>
+      <p class="service-desc"
+         data-tr="Dairenizden villanıza kadar tüm konut tiplerinde bütünleşik iç mimarlık hizmeti sunuyorum. Müşteri görüşmesiyle başlayan süreç; konsept geliştirme, malzeme seçimi, mobilya ve aksesuar önerileri ile şantiye koordinasyonunu kapsıyor. Mekânınızı hayatınızın gerçek yansıması haline getiriyorum: sabahları güneşin nereye vurduğundan, gece aydınlatmasının yarattığı ambiyansa kadar her detayı planlıyorum."
+         data-en="I offer integrated interior design services for all residential types, from apartments to villas. The process begins with client consultation and covers concept development, material selection, furniture and accessory recommendations, and site coordination. I turn your space into a true reflection of your life — planning everything from where morning light falls to the ambiance of evening lighting.">
+        Dairenizden villanıza kadar tüm konut tiplerinde bütünleşik iç mimarlık hizmeti sunuyorum. Müşteri görüşmesiyle başlayan süreç; konsept geliştirme, malzeme seçimi, mobilya ve aksesuar önerileri ile şantiye koordinasyonunu kapsıyor. Mekânınızı hayatınızın gerçek yansıması haline getiriyorum.
+      </p>
+      <div class="service-tags">
+        <span class="service-tag" data-tr="Daire" data-en="Apartment">Daire</span>
+        <span class="service-tag" data-tr="Villa" data-en="Villa">Villa</span>
+        <span class="service-tag" data-tr="Yazlık" data-en="Holiday Home">Yazlık</span>
+        <span class="service-tag" data-tr="Dubleks" data-en="Duplex">Dubleks</span>
+      </div>
+      <span class="service-arrow">→</span>
+    </div>
+
+    <div class="service-item">
+      <div class="service-num">02</div>
+      <div class="service-icon">🏢</div>
+      <div class="service-name" data-tr="Ticari & Kurumsal Tasarım" data-en="Commercial & Corporate Design">Ticari & Kurumsal Tasarım</div>
+      <p class="service-desc"
+         data-tr="Ofisiniz, mağazanız ya da restoranınız; çalışanlarınızın motivasyonunu ve müşterilerinizin deneyimini doğrudan etkiler. Kurumsal kimliğinizi, sektör dinamiklerinizi ve kullanıcı psikolojisini analiz ederek marka ruhunuzu mekâna yansıtıyorum. Açık ofis planlamasından toplantı odalarına, misafir alanlarından kafe ve restoranların akışına kadar tüm ticari mekânları kapsıyorum."
+         data-en="Your office, store, or restaurant directly impacts employee motivation and customer experience. I analyze your corporate identity, industry dynamics, and user psychology to reflect your brand's spirit into the space. I cover all commercial spaces from open-plan offices and meeting rooms to hospitality areas, cafés, and restaurant flow planning.">
+        Kurumsal kimliğinizi, sektör dinamiklerinizi ve kullanıcı psikolojisini analiz ederek marka ruhunuzu mekâna yansıtıyorum. Açık ofis planlamasından toplantı odalarına, restoranların akışına kadar her şeyi kapsıyorum.
+      </p>
+      <div class="service-tags">
+        <span class="service-tag" data-tr="Ofis" data-en="Office">Ofis</span>
+        <span class="service-tag" data-tr="Restoran" data-en="Restaurant">Restoran</span>
+        <span class="service-tag" data-tr="Butik Otel" data-en="Boutique Hotel">Butik Otel</span>
+        <span class="service-tag" data-tr="Kafe" data-en="Café">Kafe</span>
+      </div>
+      <span class="service-arrow">→</span>
+    </div>
+
+    <div class="service-item">
+      <div class="service-num">03</div>
+      <div class="service-icon">🎨</div>
+      <div class="service-name" data-tr="Konsept & Konsültasyon" data-en="Concept & Consultation">Konsept & Konsültasyon</div>
+      <p class="service-desc"
+         data-tr="Projenize tam anlamıyla dahil olmam gerekmiyorsa, yalnızca yönlendirici bir konsept ve referans dosyası hazırlayabilirim. Renk paleti, malzeme panosu, mobilya önerileri ve mekân kurgusu gibi başlıklardan oluşan kapsamlı bir konsept sunumu hazırlıyorum. Bu hizmet, DIY projeleri yürütmek isteyenler ya da mevcut ekiplerine sadece görsel rehberlik arayanlar için idealdir."
+         data-en="If you don't need me fully involved in your project, I can prepare a guiding concept and reference document. I create a comprehensive concept presentation covering color palette, materials board, furniture recommendations, and spatial layout. This service is ideal for those who want to run DIY projects or simply need visual guidance for their existing team.">
+        Renk paleti, malzeme panosu, mobilya önerileri ve mekân kurgusu içeren kapsamlı bir konsept dosyası hazırlıyorum. DIY projeleri için ya da bir ekibe görsel yön vermek isteyenler için ideal.
+      </p>
+      <div class="service-tags">
+        <span class="service-tag" data-tr="Renk Danışmanlığı" data-en="Colour Advice">Renk Danışmanlığı</span>
+        <span class="service-tag" data-tr="Mood Board" data-en="Mood Board">Mood Board</span>
+        <span class="service-tag" data-tr="Malzeme Seçimi" data-en="Material Selection">Malzeme Seçimi</span>
+      </div>
+      <span class="service-arrow">→</span>
+    </div>
+
+    <div class="service-item">
+      <div class="service-num">04</div>
+      <div class="service-icon">📐</div>
+      <div class="service-name" data-tr="3D Görselleştirme & Teknik Çizim" data-en="3D Visualization & Technical Drawing">3D Görselleştirme & Teknik Çizim</div>
+      <p class="service-desc"
+         data-tr="Tasarlanan mekânı inşaat öncesinde fotogerçekçi 3D render'lar aracılığıyla deneyimlemenizi sağlıyorum. Aydınlatma simülasyonu, malzeme ve doku testleri ve farklı renk alternatiflerinin karşılaştırması ile kararlarınızı somut görsellerle destekliyorum. Beraberinde uygulama için gerekli tüm teknik çizimleri, ölçülü planları ve detay projelerini de hazırlıyorum."
+         data-en="I enable you to experience the designed space before construction through photorealistic 3D renders. Lighting simulations, material and texture testing, and comparison of color alternatives support your decisions with concrete visuals. I also prepare all required technical drawings, dimensioned plans, and detail projects for implementation.">
+        Fotogerçekçi 3D render'lar, aydınlatma simülasyonu ve malzeme alternatifleriyle kararlarınızı görselleştiriyorum. Uygulama için teknik çizimler, ölçülü planlar ve detay projeleri de dahildir.
+      </p>
+      <div class="service-tags">
+        <span class="service-tag" data-tr="3D Render" data-en="3D Render">3D Render</span>
+        <span class="service-tag" data-tr="Teknik Çizim" data-en="Technical Drawing">Teknik Çizim</span>
+        <span class="service-tag" data-tr="Vaziyet Planı" data-en="Site Plan">Vaziyet Planı</span>
+      </div>
+      <span class="service-arrow">→</span>
+    </div>
+
+    <div class="service-item">
+      <div class="service-num">05</div>
+      <div class="service-icon">🔨</div>
+      <div class="service-name" data-tr="Renovasyon & Dönüşüm" data-en="Renovation & Transformation">Renovasyon & Dönüşüm</div>
+      <p class="service-desc"
+         data-tr="Mevcut bir mekânı baştan inşa etmeden yeniden canlandırmak hem bütçe dostu hem de çevreye duyarlı bir yaklaşımdır. Yapısal analiz, boya ve kaplama değişiklikleri, aydınlatma yenileme, mobilya revizasyonu ve aksesuar güncellemesiyle mekânınıza tamamen yeni bir kimlik kazandırabiliyorum. Küçük bir müdahaleyle büyük dönüşümler mümkün — bunun farkındayım ve her zaman en verimli çözümü öneriyorum."
+         data-en="Revitalizing an existing space without rebuilding from scratch is both budget-friendly and environmentally responsible. Through structural analysis, paint and cladding changes, lighting renewal, furniture revision, and accessory updates, I can give your space a completely new identity. Big transformations are possible with small interventions — I'm aware of this and always recommend the most efficient solution.">
+        Yapıyı bozmadan renk, ışık, mobilya ve aksesuar revizyonuyla mekânınızı yeniden doğurtuyorum. Az müdahale, büyük dönüşüm — her zaman en verimli çözümü öneriyorum.
+      </p>
+      <div class="service-tags">
+        <span class="service-tag" data-tr="Restorasyon" data-en="Restoration">Restorasyon</span>
+        <span class="service-tag" data-tr="Kısmi Tadilat" data-en="Partial Renovation">Kısmi Tadilat</span>
+        <span class="service-tag" data-tr="Bütçe Optimizasyon" data-en="Budget Optimisation">Bütçe Optimizasyon</span>
+      </div>
+      <span class="service-arrow">→</span>
+    </div>
+
+    <div class="service-item">
+      <div class="service-num">06</div>
+      <div class="service-icon">💻</div>
+      <div class="service-name" data-tr="Online Tasarım Danışmanlığı" data-en="Online Design Consulting">Online Tasarım Danışmanlığı</div>
+      <p class="service-desc"
+         data-tr="İzmir dışında ikamet ediyorsanız ya da saha ziyareti gerektirmeyen bir destek arıyorsanız, online danışmanlık hizmetim tam size göre. Video görüşme, ölçülü plan analizi, dijital mood board ve yazılı tasarım rehberi aracılığıyla mekânınıza yön veriyorum. Türkiye genelinde ve uluslararası müşterilere de hizmet veriyorum. Esnekliğinden ödün vermek istemeyen müşteriler için ideal bir çözüm."
+         data-en="If you reside outside İzmir or are looking for support that doesn't require a site visit, my online consulting service is perfect for you. I guide your space through video calls, dimensioned plan analysis, digital mood boards, and written design briefs. I also serve clients across Turkey and internationally. The ideal solution for clients who don't want to compromise on flexibility.">
+        Video görüşme, plan analizi ve dijital mood board aracılığıyla Türkiye geneli ve uluslararası müşterilere uzaktan tasarım danışmanlığı sunuyorum.
+      </p>
+      <div class="service-tags">
+        <span class="service-tag" data-tr="Video Görüşme" data-en="Video Call">Video Görüşme</span>
+        <span class="service-tag" data-tr="Dijital Paket" data-en="Digital Package">Dijital Paket</span>
+        <span class="service-tag" data-tr="Uluslararası" data-en="International">Uluslararası</span>
+      </div>
+      <span class="service-arrow">→</span>
+    </div>
+
+  </div>
+
+  <!-- Process strip -->
+  <div class="process-strip">
+    <div class="process-step">
+      <div class="process-step-num">1</div>
+      <div class="process-step-label" data-tr="İlk Adım" data-en="First Step">İlk Adım</div>
+      <div class="process-step-title" data-tr="Keşif Görüşmesi" data-en="Discovery Call">Keşif Görüşmesi</div>
+    </div>
+    <div class="process-step">
+      <div class="process-step-num">2</div>
+      <div class="process-step-label" data-tr="İkinci Adım" data-en="Second Step">İkinci Adım</div>
+      <div class="process-step-title" data-tr="Konsept Geliştirme" data-en="Concept Development">Konsept Geliştirme</div>
+    </div>
+    <div class="process-step">
+      <div class="process-step-num">3</div>
+      <div class="process-step-label" data-tr="Üçüncü Adım" data-en="Third Step">Üçüncü Adım</div>
+      <div class="process-step-title" data-tr="Uygulama & Koordinasyon" data-en="Implementation & Coordination">Uygulama & Koordinasyon</div>
+    </div>
+    <div class="process-step">
+      <div class="process-step-num">4</div>
+      <div class="process-step-label" data-tr="Son Adım" data-en="Final Step">Son Adım</div>
+      <div class="process-step-title" data-tr="Teslim & Tamamlama" data-en="Handover & Completion">Teslim & Tamamlama</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section id="testimonials">
+  <div class="section-tag" data-tr="Müşteri Yorumları" data-en="Testimonials">Müşteri Yorumları</div>
+  <h2 class="section-title" data-tr="Onlar ne <em>dedi?</em>" data-en="What did they <em>say?</em>">Onlar ne <em>dedi?</em></h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text"
+         data-tr="İkra Hanım'la çalışmak gerçek anlamda dönüştürücü bir deneyimdi. Bitmek bilmeyen yapım dönemine rağmen süreç boyunca her detayı takip etti, bizi her zaman bilgilendirdi. Evimize ilk girdiğimizde ağladım."
+         data-en="Working with İkra was a truly transformative experience. She followed every detail throughout the seemingly endless construction period and kept us informed at all times. When we first walked into our home, I cried.">
+        İkra Hanım'la çalışmak gerçek anlamda dönüştürücü bir deneyimdi. Bitmek bilmeyen yapım dönemine rağmen süreç boyunca her detayı takip etti. Evimize ilk girdiğimizde ağladım.
+      </p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">Z</div>
+        <div>
+          <div class="testimonial-name">Zeynep & Mert Kaya</div>
+          <div class="testimonial-role" data-tr="Konut Projesi · Alsancak" data-en="Residential Project · Alsancak">Konut Projesi · Alsancak</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text"
+         data-tr="Restoranımızın yeniden tasarımı için birçok mimar ile görüştük. İkra, bütçemizi aşmadan tam da hayal ettiğimiz mekanı yarattı. Açılış gecesi müşterilerimizden gelen tepkiler inanılmazdı."
+         data-en="We met with many designers for our restaurant redesign. İkra created exactly the space we envisioned without exceeding our budget. The reactions from our guests on opening night were incredible.">
+        Restoranımızın yeniden tasarımı için birçok mimar ile görüştük. İkra, bütçemizi aşmadan tam da hayal ettiğimiz mekânı yarattı. Açılış gecesi müşterilerimizin tepkileri inanılmazdı.
+      </p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">A</div>
+        <div>
+          <div class="testimonial-name">Ahmet Demir</div>
+          <div class="testimonial-role" data-tr="Restoran Sahibi · Kordon" data-en="Restaurant Owner · Kordon">Restoran Sahibi · Kordon</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text"
+         data-tr="Ofisimizi birkaç odadan ibaret bir çalışma alanından ilham veren bir kurumsal merkeze dönüştürdü. Çalışanlarımızın genel memnuniyeti gözle görülür biçimde arttı. İkra'nın akademik ve pratik bilgiyi birleştirme biçimi gerçekten etkileyici."
+         data-en="She transformed our office from a few rooms into an inspiring corporate hub. Employee satisfaction has visibly increased. The way İkra combines academic and practical knowledge is truly impressive.">
+        Ofisimizi birkaç odadan ibaret bir çalışma alanından ilham veren bir kurumsal merkeze dönüştürdü. Çalışanlarımızın genel memnuniyeti gözle görülür biçimde arttı.
+      </p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">S</div>
+        <div>
+          <div class="testimonial-name">Selin Arslan</div>
+          <div class="testimonial-role" data-tr="Genel Müdür · İzmir" data-en="General Manager · İzmir">Genel Müdür · İzmir</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="contact-info">
+    <div class="section-tag" data-tr="İletişim" data-en="Contact">İletişim</div>
+    <h2 class="section-title"
+        data-tr="Projenizi<br><em>konuşalım.</em>"
+        data-en="Let's talk about<br>your <em>project.</em>">
+      Projenizi<br><em>konuşalım.</em>
+    </h2>
+    <div class="divider"></div>
+    <p data-tr="Her yeni proje, kısa bir tanışma görüşmesiyle başlıyor. İhtiyacınızı, bütçenizi ve hayalinizdeki mekânı dinliyorum. Sonrasına birlikte karar veriyoruz."
+       data-en="Every new project starts with a brief introductory call. I listen to your needs, budget, and dream space. We decide the rest together.">
+      Her yeni proje, kısa bir tanışma görüşmesiyle başlıyor. İhtiyacınızı, bütçenizi ve hayalinizdeki mekânı dinliyorum. Sonrasına birlikte karar veriyoruz.
+    </p>
+    <div class="contact-details">
+      <div class="contact-row">
+        <span class="contact-label" data-tr="E-posta" data-en="Email">E-posta</span>
+        <a href="mailto:ikra@ikraguler.com" class="contact-value">ikra@ikraguler.com</a>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label" data-tr="Telefon" data-en="Phone">Telefon</span>
+        <a href="tel:+905321234567" class="contact-value">+90 532 123 45 67</a>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label" data-tr="Stüdyo" data-en="Studio">Stüdyo</span>
+        <span class="contact-value">Alsancak, İzmir</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label" data-tr="Saatler" data-en="Hours">Saatler</span>
+        <span class="contact-value" data-tr="Pzt–Cum, 09:00–18:00" data-en="Mon–Fri, 09:00–18:00">Pzt–Cum, 09:00–18:00</span>
+      </div>
+    </div>
+  </div>
+
+  <form class="contact-form" onsubmit="handleSubmit(event)">
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" data-tr="Adınız Soyadınız" data-en="Full Name">Adınız Soyadınız</label>
+        <input class="form-input" type="text"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-tr="E-posta Adresiniz" data-en="Email Address">E-posta Adresiniz</label>
+        <input class="form-input" type="email"/>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" data-tr="Telefon" data-en="Phone">Telefon</label>
+        <input class="form-input" type="tel"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-tr="Hizmet Türü" data-en="Service Type">Hizmet Türü</label>
+        <select class="form-input form-select">
+          <option data-tr="Konut Tasarımı" data-en="Residential Design">Konut Tasarımı</option>
+          <option data-tr="Ticari Tasarım" data-en="Commercial Design">Ticari Tasarım</option>
+          <option data-tr="Konsept & Konsültasyon" data-en="Concept & Consultation">Konsept & Konsültasyon</option>
+          <option data-tr="3D Görselleştirme" data-en="3D Visualization">3D Görselleştirme</option>
+          <option data-tr="Renovasyon" data-en="Renovation">Renovasyon</option>
+          <option data-tr="Online Danışmanlık" data-en="Online Consulting">Online Danışmanlık</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-tr="Proje Hakkında Kısaca Anlatın" data-en="Briefly Describe Your Project">Proje Hakkında Kısaca Anlatın</label>
+      <textarea class="form-textarea"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary" data-tr="Mesaj Gönder" data-en="Send Message">Mesaj Gönder</button>
+  </form>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <span class="footer-logo">İkra Güler</span>
+  <span class="footer-copy" data-tr="© 2025 · Tüm hakları saklıdır" data-en="© 2025 · All rights reserved">© 2025 · Tüm hakları saklıdır</span>
+  <div class="footer-socials">
+    <a href="#">Instagram</a>
+    <a href="#">Behance</a>
+    <a href="#">LinkedIn</a>
+  </div>
+</footer>
+
+<script>
+  let currentLang = 'tr';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+    });
+    document.querySelectorAll('[data-tr]').forEach(el => {
+      const text = el.getAttribute('data-' + lang);
+      if (!text) return;
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        el.placeholder = text;
+      } else {
+        el.innerHTML = text;
+      }
+    });
+    document.documentElement.lang = lang === 'tr' ? 'tr' : 'en';
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    const orig = btn.textContent;
+    btn.textContent = currentLang === 'tr' ? 'Gönderildi ✓' : 'Sent ✓';
+    btn.style.background = 'var(--olive)';
+    setTimeout(() => { btn.textContent = orig; btn.style.background = ''; e.target.reset(); }, 3000);
+  }
+
+  // Scroll fade-in
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-item, .project-card, .about-stat, .testimonial-card, .process-step').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(18px)';
+    el.style.transition = 'opacity .55s ease, transform .55s ease';
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
